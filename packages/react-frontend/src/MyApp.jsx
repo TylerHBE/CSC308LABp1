@@ -1,21 +1,75 @@
 // src/MyApp.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Table from "./Table";
 import Form from "./Form";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+  function fetchUsers() {
+    const promise = fetch("http://localhost:8000/users");
+    return promise;
+  }
+
+  function postUser(person) {
+    const promise = fetch("Http://localhost:8000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(person),
     });
-    setCharacters(updated);
+
+    return promise;
+  }
+
+  function deleteUser(person) {
+    const promise = fetch(`Http://localhost:8000/users/${person.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return promise;
+  }
+
+  function removeOneCharacter(index) {
+    deleteUser(characters[index])
+      .then((res) => {
+        if (res.status != 204)
+          throw new Error("Unsuccessful deletion!");
+
+        const updated = characters.filter((character, i) => {
+          return i !== index;
+        });
+        setCharacters(updated);
+      }).catch((error) => {
+        console.log(error);
+      });
   }
 
   function updateList(person) {
-    setCharacters([...characters, person]);
+    postUser(person)
+      .then((res) => {
+        if (res.status != 201)
+          throw new Error("No Data!");
+        return res.json();
+      })
+      .then((json) => {
+        setCharacters(json.users_list)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
+
+  useEffect(() => {
+    fetchUsers()
+      .then((res) => res.json())
+      .then((json) => setCharacters(json["users_list"]))
+      .catch((error) => { console.log(error); });
+  }, []);
 
   return (
     <div className="container">
