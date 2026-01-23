@@ -20,17 +20,23 @@ class Portfolio {
     }
 
     sellStock(ticker, quantity) {
-        if (this.stocks[ticker]) {
+        if (quantity > this.getNumberOfStock(ticker)) {
+                throw new Error('Not possible to sell this number of shares.');
+        }
+        else {
             this.stocks[ticker] -= quantity;
             if (this.stocks[ticker] <= 0) {
                 delete this.stocks[ticker];
             }
-            
         }
     }
 
     getNumberOfTickers() {
         return Object.keys(this.stocks).length;
+    }
+
+    getNumberOfStock(ticker) {
+        return this.stocks[ticker] || 0;
     }
 }
 

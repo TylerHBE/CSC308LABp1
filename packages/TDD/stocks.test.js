@@ -65,3 +65,27 @@ test('2.6 - Portfolio gets number of tickers correctly after selling some stocks
     portfolio.sellStock('AAPL', 10);
     expect(portfolio.getNumberOfTickers()).toBe(1);
 });
+
+test('2.7 - Portfolio answers how many stocks owned', () => {
+    const portfolio = new myFunctions.Portfolio();
+    portfolio.purchaseStock('AAPL', 10);
+    portfolio.purchaseStock('GOOGL', 5);
+    expect(portfolio.getNumberOfStock('AAPL')).toBe(10);
+    expect(portfolio.getNumberOfStock('GOOGL')).toBe(5);
+});
+
+test('2.7 - Portfolio answers how many stocks owned for non-existent ticker', () => {
+    const portfolio = new myFunctions.Portfolio();
+    expect(portfolio.getNumberOfStock('MSFT')).toBe(0);
+});
+
+test('2.8 - Error when selling more stocks than owned', () => {
+    const portfolio = new myFunctions.Portfolio();
+    portfolio.purchaseStock('AAPL', 10);
+    expect(() => portfolio.sellStock('AAPL', 15)).toThrow('Not possible to sell this number of shares.');
+});
+
+test('2.8 - Error when selling not owned stocks', () => {
+    const portfolio = new myFunctions.Portfolio();
+    expect(() => portfolio.sellStock('AAPL', 15)).toThrow('Not possible to sell this number of shares.');
+});
