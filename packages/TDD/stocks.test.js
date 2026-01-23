@@ -35,3 +35,15 @@ test('2.4 - Portfolio sells stocks correctly to zero', () => {
   portfolio.sellStock('AAPL', 10);
   expect(portfolio.getStocks()).toEqual({ 'AAPL': 0 });
 });
+
+test('2.5 - Portfolio gets number of tickers correctly', () => {
+  const portfolio = new myFunctions.Portfolio();
+  portfolio.purchaseStock('AAPL', 10);
+  portfolio.purchaseStock('GOOGL', 5);
+  expect(portfolio.getNumberOfTickers()).toBe(2);
+});
+
+test('2.5 - Portfolio gets number of tickers correctly with no purchases', () => {
+  const portfolio = new myFunctions.Portfolio();
+  expect(portfolio.getNumberOfTickers()).toBe(0);
+});

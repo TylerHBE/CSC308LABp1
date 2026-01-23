@@ -25,6 +25,10 @@ class Portfolio {
             
         }
     }
+
+    getNumberOfTickers() {
+        return Object.keys(this.stocks).length;
+    }
 }
 
 exports.Portfolio = Portfolio;
