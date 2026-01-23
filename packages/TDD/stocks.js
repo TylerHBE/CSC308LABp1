@@ -18,6 +18,13 @@ class Portfolio {
             this.stocks[ticker] = quantity;
         }
     }
+
+    sellStock(ticker, quantity) {
+        if (this.stocks[ticker]) {
+            this.stocks[ticker] -= quantity;
+            
+        }
+    }
 }
 
 exports.Portfolio = Portfolio;

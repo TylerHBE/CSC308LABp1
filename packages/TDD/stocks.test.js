@@ -21,3 +21,17 @@ test('2.3 - Portfolio purchases stocks correctly, answers isEmpty correctly', ()
   portfolio.purchaseStock('AAPL', 10);
   expect(portfolio.isEmpty()).toBe(false);
 });
+
+test('2.4 - Portfolio sells stocks correctly', () => {
+  const portfolio = new myFunctions.Portfolio();
+  portfolio.purchaseStock('AAPL', 10);
+  portfolio.sellStock('AAPL', 4);
+  expect(portfolio.getStocks()).toEqual({ 'AAPL': 6 });
+});
+
+test('2.4 - Portfolio sells stocks correctly to zero', () => {
+  const portfolio = new myFunctions.Portfolio();
+  portfolio.purchaseStock('AAPL', 10);
+  portfolio.sellStock('AAPL', 10);
+  expect(portfolio.getStocks()).toEqual({ 'AAPL': 0 });
+});
