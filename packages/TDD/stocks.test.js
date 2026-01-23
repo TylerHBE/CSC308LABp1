@@ -89,3 +89,12 @@ test('2.8 - Error when selling not owned stocks', () => {
     const portfolio = new myFunctions.Portfolio();
     expect(() => portfolio.sellStock('AAPL', 15)).toThrow('Not possible to sell this number of shares.');
 });
+
+/* Overall, I felt that following the TDD approach was very helpful in understanding the 
+requirements and implementing the code correctly. The tests guided me through each step of 
+development, ensuring that each function worked as expected before moving on to the next. 
+This made debugging easier and helped me write more robust code. Additional testing helped 
+me figure out smaller bugs, like one bug where I was testing for if the stock quantity was 
+enough to sell but I forgot I had already accounted for if the stock existed in the first 
+place, meaning no error was thrown even if the stock attempting to be sold didn't exist. So,
+overall, I thought the approach was quite helpful. */
