@@ -22,6 +22,9 @@ class Portfolio {
     sellStock(ticker, quantity) {
         if (this.stocks[ticker]) {
             this.stocks[ticker] -= quantity;
+            if (this.stocks[ticker] <= 0) {
+                delete this.stocks[ticker];
+            }
             
         }
     }
